@@ -42,11 +42,11 @@
 
 ## About The Project
 
-This project is 2nd solution of **ICDAR 2021 Competition on Scientific Literature Parsing, Task B**. We implement the solution by [MMOCR](https://github.com/open-mmlab/mmocr)，which is an open-source toolbox based on PyTorch. You can click [here](https://aieval.draco.res.ibm.com/challenge/40/overview) for more details about this competition.
+This project presents our 2nd place solution for **ICDAR 2021 Competition on Scientific Literature Parsing, Task B**. We reimplement our solution by [MMOCR](https://github.com/open-mmlab/mmocr)，which is an open-source toolbox based on PyTorch. You can click [here](https://aieval.draco.res.ibm.com/challenge/40/overview) for more details about this competition. Our original implementation is based on **FastOCR** (one of our internal toolbox similar with MMOCR). 
 
 ### Method Description
 
-We divide the table content recognition task into four sub-tasks: **table structure recognition**, **text line detection**, **text line recognition**, and **box assignment**. And we develop [MASTER](https://arxiv.org/abs/1910.02562), propose a novel table structure recognition architrcture, which we call **TableMASTER**. The difference between **MASTER** and **TableMASTER** will be shown below. You can click [here](https://arxiv.org/pdf/2105.01848.pdf) for more details about this solution.
+In our solution, we divide the table content recognition task into four sub-tasks: **table structure recognition**, **text line detection**, **text line recognition**, and **box assignment**. Based on [MASTER](https://arxiv.org/abs/1910.02562), we propose a novel table structure recognition architrcture, which we call **TableMASTER**. The difference between **MASTER** and **TableMASTER** will be shown below. You can click [here](https://arxiv.org/pdf/2105.01848.pdf) for more details about this solution.
 
 ![MASTER's architecture](./imgs/architecture.jpg)
 
@@ -68,9 +68,9 @@ We divide the table content recognition task into four sub-tasks: **table struct
 ### Prerequisites
 
 + Competition dataset **PubTabNet**, click [here](https://developer.ibm.com/exchanges/data/all/pubtabnet/) for downloading.
-+ About **PubTabNet**, [github](https://github.com/ibm-aur-nlp/PubTabNet) and [paper](https://arxiv.org/abs/1911.10683).
++ About **PubTabNet**, check their [github](https://github.com/ibm-aur-nlp/PubTabNet) and [paper](https://arxiv.org/abs/1911.10683).
 
-* About the metric **TEDS**, [github](https://github.com/ibm-aur-nlp/PubTabNet/tree/master/src) 
+* About the metric **TEDS**, see [github](https://github.com/ibm-aur-nlp/PubTabNet/tree/master/src) 
 
 ### Installation
 
@@ -108,15 +108,15 @@ We divide the table content recognition task into four sub-tasks: **table struct
 
 ### Data preprocess
 
-Run [data_preprocess.py](./table_recognition/data_preprocess.py) to get suitable train data. Remember to change the **'raw_img_root'** and **‘save_root’** property of **PubtabnetParser** to your path.
+Run [data_preprocess.py](./table_recognition/data_preprocess.py) to get valid train data. Remember to change the **'raw_img_root'** and **‘save_root’** property of **PubtabnetParser** to your path.
 
 ```shell
 python ./table_recognition/data_preprocess.py
 ```
 
-It will about 8 hours to finish 500777 train files parsing. After finish train set parsing, change the **'split'** property of **PubtabnetParser** to **'val'** and get formatted val data.
+It will about 8 hours to finish parsing 500777 train files. After finishing the train set parsing, change the property of **'split'** in **PubtabnetParser** to **'val'** and get formatted val data.
 
-Directory structure of parsed train data.
+Directory structure of parsed train data is :
 
 ```shell
 .
@@ -145,23 +145,25 @@ Directory structure of parsed train data.
 
 ### Train
 
-1. Train text line detection model, [PSENet](https://arxiv.org/pdf/1806.02559.pdf). 
+1. Train text line detection model with [PSENet](https://arxiv.org/pdf/1806.02559.pdf). 
 
    ```shell
    sh ./table_recognition/table_text_line_detection_dist_train.sh
    ```
 
-   We don't offer PSENet train data here, you can get the text line annotations by open source label software. In our experiment,  we only use 2,500 table images to  get a perfect text line detection model.
+   We don't offer PSENet train data here, you can create the text line annotations by open source label software. In our experiment,  we only use 2,500 table images to  train our model. It gets a perfect text line detection result on validation set.
 
-2. Train text-line recognition model, [MASTER](https://arxiv.org/abs/1910.02562). 
+2. Train text-line recognition model with [MASTER](https://arxiv.org/abs/1910.02562). 
 
    ```shell
    sh ./table_recognition/table_text_line_recognition_dist_train.sh
    ```
 
-   We can get about 30,000,000 text line images for training and 550,000 text line images for evaluating.  But we only select 20,000 text line images for evaluatiing after each trainig epoch, to pick up the best text line recognition model.
+   We can get about 30,000,000 text line images from 500,777 training images and 550,000 text line images from 9115 validation images.  But we only select 20,000 text line images from 550,000 dataset for evaluatiing after each trainig epoch, to pick up the best text line recognition model.
 
-3. Train table structure recognition model, **TableMASTER**.
+   Note that our MASTER OCR is directly trained on samples mixed with single-line texts and multiple-line texts.
+
+3. Train table structure recognition model, with **TableMASTER**.
 
    ```shell
    sh ./table_recognition/table_recognition_dist_train.sh
@@ -169,9 +171,9 @@ Directory structure of parsed train data.
 
 ### Inference
 
-To get final results, firstly, we need to forward 3 models mentioned above, respectively. Secondly, we merge the results by our matching algorithm, and get the final results, which is HTML code.
+To get final results, firstly, we need to forward the three up-mentioned models, respectively. Secondly, we merge the results by our matching algorithm, to generate the final HTML code.
 
-1.  Models inference.
+1.  Models inference. We do this to speed up the inference.
 
    ```shell
    python ./table_recognition/run_table_inference.py
@@ -179,7 +181,7 @@ To get final results, firstly, we need to forward 3 models mentioned above, resp
 
    [run_table_inference.py](./table_recognition/run_table_inference.py) wil call [table_inference.py](./table_recognition/table_inference.py) and use multiple gpu devices to do model inference. Before running this script, you should change the value of **cfg** in [table_inference.py](./table_recognition/table_inference.py) .
 
-   Directory structure of text line detection and text line recognition inference results.
+   Directory structure of text line detection and text line recognition inference results are:
 
    ```shell
    # If you use 8 gpu devices to inference, you will get 8 detection results pickle files, one end2end_result pickle files and 8 structure recognition results pickle files. 
@@ -197,13 +199,13 @@ To get final results, firstly, we need to forward 3 models mentioned above, resp
    │   └── structure_master_results_7.pkl
    ```
 
-2.  Merge results.
+2.  Merge results. 
 
    ```shell
    python ./table_recognition/match.py
    ```
 
-   After matching, you will get final result pickle file.
+   After matching, congratulations, you will get final result pickle file.
 
 ### Get TEDS score
 
@@ -219,7 +221,7 @@ To get final results, firstly, we need to forward 3 models mentioned above, resp
    python ./table_recognition/get_val_gt.py
    ```
 
-3. Get TEDS score. Before run this script, modify pred file path and gt file path in [mmocr_teds_acc_mp.py](./table_recognition/PubTabNet-master/src/mmocr_teds_acc_mp.py)
+3. Calcutate TEDS score. Before run this script, modify pred file path and gt file path in [mmocr_teds_acc_mp.py](./table_recognition/PubTabNet-master/src/mmocr_teds_acc_mp.py)
 
    ```shell
    python ./table_recognition/PubTabNet-master/src/mmocr_teds_acc_mp.py
@@ -233,29 +235,29 @@ To get final results, firstly, we need to forward 3 models mentioned above, resp
 
 **Text line end2end recognition accuracy**
 
-|     Models      | Word Accuracy |
-| :-------------: | :-----------: |
-| PSENet + MASTER |  **0.9885**   |
+|     Models      |  Accuracy  |
+| :-------------: | :--------: |
+| PSENet + MASTER | **0.9885** |
 
 
 
 **Structure recognition accuracy**
 
-|          Model architecture           | Word Accuracy |
-| :-----------------------------------: | :-----------: |
-|       TableMASTER_maxlength_500       |    0.7808     |
-| TableMASTER_ConcatLayer_maxlength_500 |  **0.7821**   |
-| TableMASTER_ConcatLayer_maxlength_600 |    0.7799     |
+|          Model architecture           |  Accuracy  |
+| :-----------------------------------: | :--------: |
+|       TableMASTER_maxlength_500       |   0.7808   |
+| TableMASTER_ConcatLayer_maxlength_500 | **0.7821** |
+| TableMASTER_ConcatLayer_maxlength_600 |   0.7799   |
 
 
 
 **TEDS score**
 
-| Models                                                  | TEDS       |
-| ------------------------------------------------------- | ---------- |
-| PSENet + MASTER + TableMASTER_maxlength_500             | 0.9658     |
-| PSENet + MASTER + TableMASTER_ConcatLayer_maxlength_500 | 0.9669     |
-| PSENet + MASTER + ensemble_TableMASTER                  | **0.9676** |
+|                         Models                          |    TEDS    |
+| :-----------------------------------------------------: | :--------: |
+|       PSENet + MASTER + TableMASTER_maxlength_500       |   0.9658   |
+| PSENet + MASTER + TableMASTER_ConcatLayer_maxlength_500 |   0.9669   |
+|         PSENet + MASTER + ensemble_TableMASTER          | **0.9676** |
 
 In [this paper](https://arxiv.org/pdf/2105.01848.pdf), we reported 0.9684 TEDS score in validation set (9115 samples). The gap between **0.9676** and **0.9684**, it comes from that we use ensemble text line model in the competition, but not here. Of course, hyperparameter tuning will also affect TEDS score.
 
@@ -312,3 +314,4 @@ This project is licensed under the MIT License. See LICENSE for more details.
 * [OpenMMLab](https://github.com/open-mmlab)
 * [PubTabNet](https://github.com/ibm-aur-nlp/PubTabNet)
 * [PSENet](https://github.com/whai362/PSENet)
+* [TableMASTER Report PPT](./imgs/table2html.pdf)

@@ -30,6 +30,7 @@
         <li><a href="#get-teds-score">Get TEDS score</a></li>
       </ul>
      </li>
+    <li><a href="#result">Result</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
@@ -230,13 +231,15 @@ To get final results, firstly, we need to forward 3 models mentioned above, resp
 
 ## Result
 
-Text line end2end recognition accuracy
+**Text line end2end recognition accuracy**
 
 |     Models      | Word Accuracy |
 | :-------------: | :-----------: |
 | PSENet + MASTER |  **0.9885**   |
 
-Structure recognition accuracy
+
+
+**Structure recognition accuracy**
 
 |          Model architecture           | Word Accuracy |
 | :-----------------------------------: | :-----------: |
@@ -244,7 +247,9 @@ Structure recognition accuracy
 | TableMASTER_ConcatLayer_maxlength_500 |  **0.7821**   |
 | TableMASTER_ConcatLayer_maxlength_600 |    0.7799     |
 
-TEDS score
+
+
+**TEDS score**
 
 | Models                                                  | TEDS       |
 | ------------------------------------------------------- | ---------- |

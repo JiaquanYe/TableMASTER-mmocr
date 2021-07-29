@@ -1,0 +1,1 @@
+CUDA_VISIBLE_DEVICES=0 PORT=29500 ./tools/dist_train.sh ./configs/textrecog/master/masterv2_ResnetExtra_tableRec_dataset_dynamic_mmfp16.py /data_8/expr/mmocr_text_line_recognition/0707/ 1

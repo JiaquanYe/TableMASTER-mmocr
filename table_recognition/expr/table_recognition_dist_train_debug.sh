@@ -1,0 +1,1 @@
+CUDA_VISIBLE_DEVICES=0 PORT=29500 ./tools/dist_train.sh ./configs/textrecog/master/table_master_ResnetExtract_0705.py /data_8/expr/mmocr_table_recognition/0707_debug/ 1

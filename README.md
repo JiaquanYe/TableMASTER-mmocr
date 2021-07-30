@@ -114,7 +114,7 @@ Run [data_preprocess.py](./table_recognition/data_preprocess.py) to get valid tr
 python ./table_recognition/data_preprocess.py
 ```
 
-It will about 8 hours to finish parsing 500777 train files. After finishing the train set parsing, change the property of **'split'** in **PubtabnetParser** to **'val'** and get formatted val data.
+It will about 8 hours to finish parsing 500777 train files. After finishing the train set parsing, change the property of **'split'** folder in **PubtabnetParser** to **'val'** and get formatted val data.
 
 Directory structure of parsed train data is :
 
@@ -259,7 +259,7 @@ To get final results, firstly, we need to forward the three up-mentioned models,
 | PSENet + MASTER + TableMASTER_ConcatLayer_maxlength_500 |   0.9669   |
 |         PSENet + MASTER + ensemble_TableMASTER          | **0.9676** |
 
-In [this paper](https://arxiv.org/pdf/2105.01848.pdf), we reported 0.9684 TEDS score in validation set (9115 samples). The gap between **0.9676** and **0.9684**, it comes from that we use ensemble text line model in the competition, but not here. Of course, hyperparameter tuning will also affect TEDS score.
+In [this paper](https://arxiv.org/pdf/2105.01848.pdf), we reported 0.9684 TEDS score in validation set (9115 samples). The gap between **0.9676** and **0.9684** comes from that we ensemble three text line models in the competition, but here, we only use one model. Of course, hyperparameter tuning will also affect TEDS score.
 
 
 
@@ -314,4 +314,5 @@ This project is licensed under the MIT License. See LICENSE for more details.
 * [OpenMMLab](https://github.com/open-mmlab)
 * [PubTabNet](https://github.com/ibm-aur-nlp/PubTabNet)
 * [PSENet](https://github.com/whai362/PSENet)
+* [MASTER-mmocr](https://github.com/JiaquanYe/MASTER-mmocr)
 * [TableMASTER Report PPT](./imgs/table2html.pdf)

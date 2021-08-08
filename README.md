@@ -42,7 +42,7 @@
 
 ## About The Project
 
-This project presents our 2nd place solution for **ICDAR 2021 Competition on Scientific Literature Parsing, Task B**. We reimplement our solution by [MMOCR](https://github.com/open-mmlab/mmocr)，which is an open-source toolbox based on PyTorch. You can click [here](https://aieval.draco.res.ibm.com/challenge/40/overview) for more details about this competition. Our original implementation is based on **FastOCR** (one of our internal toolbox similar with MMOCR). 
+This project presents our 2nd place solution for **ICDAR 2021 Competition on Scientific Literature Parsing, Task B**. We reimplement our solution by [MMOCR](https://github.com/open-mmlab/mmocr)，which is an open-source toolbox based on PyTorch. You can click [here](https://aieval.draco.res.ibm.com/challenge/40/overview) for more details about this competition. Our original implementation is based on **FastOCR** (one of our internal toolbox similar with MMOCR).
 
 ### Method Description
 
@@ -70,19 +70,19 @@ In our solution, we divide the table content recognition task into four sub-task
 + Competition dataset **PubTabNet**, click [here](https://developer.ibm.com/exchanges/data/all/pubtabnet/) for downloading.
 + About **PubTabNet**, check their [github](https://github.com/ibm-aur-nlp/PubTabNet) and [paper](https://arxiv.org/abs/1911.10683).
 
-* About the metric **TEDS**, see [github](https://github.com/ibm-aur-nlp/PubTabNet/tree/master/src) 
+* About the metric **TEDS**, see [github](https://github.com/ibm-aur-nlp/PubTabNet/tree/master/src)
 
 ### Installation
 
 2. Install mmdetection. click [here](https://github.com/open-mmlab/mmdetection/blob/v2.11.0/docs/get_started.md) for details.
-   
+
    ```sh
    # We embed mmdetection-2.11.0 source code into this project.
    # You can cd and install it (recommend).
    cd ./mmdetection-2.11.0
    pip install -v -e .
    ```
-   
+
 3. Install mmocr. click [here](https://github.com/open-mmlab/mmocr/blob/main/docs/install.md) for details.
 
    ```sh
@@ -95,7 +95,7 @@ In our solution, we divide the table content recognition task into four sub-task
 
    ```sh
    pip install mmcv-full=={mmcv_version} -f https://download.openmmlab.com/mmcv/dist/{cu_version}/{torch_version}/index.html
-   
+
    # install mmcv-full-1.3.4 with torch version 1.8.0 cuda_version 10.2
    pip install mmcv-full==1.3.4 -f https://download.openmmlab.com/mmcv/dist/cu102/torch1.8.0/index.html
    ```
@@ -127,10 +127,10 @@ Directory structure of parsed train data is :
 │   └── ...
 ├── recognition_train_img
 │   ├── 0
-│       ├── PMC1064100_007_00_0.png
-│       ├── PMC1064100_007_00_10.png
-│       ├── ...
-│       └── PMC1064100_007_00_108.png
+│   │   ├── PMC1064100_007_00_0.png
+│   │   ├── PMC1064100_007_00_10.png
+│   │   ├── ...
+│   │   └── PMC1064100_007_00_108.png
 │   ├── 1
 │   ├── ...
 │   └── 15
@@ -145,18 +145,18 @@ Directory structure of parsed train data is :
 
 ### Train
 
-1. Train text line detection model with [PSENet](https://arxiv.org/pdf/1806.02559.pdf). 
+1. Train text line detection model with [PSENet](https://arxiv.org/pdf/1806.02559.pdf).
 
    ```shell
-   sh ./table_recognition/table_text_line_detection_dist_train.sh
+   sh ./table_recognition/expr/table_text_line_detection_dist_train.sh
    ```
 
    We don't offer PSENet train data here, you can create the text line annotations by open source label software. In our experiment,  we only use 2,500 table images to  train our model. It gets a perfect text line detection result on validation set.
 
-2. Train text-line recognition model with [MASTER](https://arxiv.org/abs/1910.02562). 
+2. Train text-line recognition model with [MASTER](https://arxiv.org/abs/1910.02562).
 
    ```shell
-   sh ./table_recognition/table_text_line_recognition_dist_train.sh
+   sh ./table_recognition/expr/table_text_line_recognition_dist_train.sh
    ```
 
    We can get about 30,000,000 text line images from 500,777 training images and 550,000 text line images from 9115 validation images.  But we only select 20,000 text line images from 550,000 dataset for evaluatiing after each trainig epoch, to pick up the best text line recognition model.
@@ -166,7 +166,7 @@ Directory structure of parsed train data is :
 3. Train table structure recognition model, with **TableMASTER**.
 
    ```shell
-   sh ./table_recognition/table_recognition_dist_train.sh
+   sh ./table_recognition/expr/table_recognition_dist_train.sh
    ```
 
 ### Inference
@@ -184,7 +184,7 @@ To get final results, firstly, we need to forward the three up-mentioned models,
    Directory structure of text line detection and text line recognition inference results are:
 
    ```shell
-   # If you use 8 gpu devices to inference, you will get 8 detection results pickle files, one end2end_result pickle files and 8 structure recognition results pickle files. 
+   # If you use 8 gpu devices to inference, you will get 8 detection results pickle files, one end2end_result pickle files and 8 structure recognition results pickle files.
    .
    ├── end2end_caches
    │   ├── end2end_results.pkl
@@ -199,7 +199,7 @@ To get final results, firstly, we need to forward the three up-mentioned models,
    │   └── structure_master_results_7.pkl
    ```
 
-2.  Merge results. 
+2.  Merge results.
 
    ```shell
    python ./table_recognition/match.py
@@ -227,7 +227,7 @@ To get final results, firstly, we need to forward the three up-mentioned models,
    python ./table_recognition/PubTabNet-master/src/mmocr_teds_acc_mp.py
    ```
 
-   
+
 
 <!-- Result -->
 

@@ -273,7 +273,7 @@ The **TableMASTER** (TableMASTER_maxlength_500) pretrained model has been releas
 
 In the validation set, the accuracy is **0.7767**. (Train with GTX 1080Ti * 3, batchsize is 12).
 
- [[Google Drive]](https://drive.google.com/file/d/1LSuVQJ0J8WFtXhLfcCKyzGqcCYmcwEk6/view?usp=sharing)
+[[Google Drive]](https://drive.google.com/file/d/1LSuVQJ0J8WFtXhLfcCKyzGqcCYmcwEk6/view?usp=sharing)
 
 [[BaiduYun Drive]](https://pan.baidu.com/s/1G2tBpycZY6c6wzfE3V9khw) code:**irp6**
 

@@ -31,10 +31,12 @@
       </ul>
      </li>
     <li><a href="#result">Result</a></li>
+    <li><a href="#pretrained model">Pretrained Model</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
+
 
 
 
@@ -87,7 +89,7 @@ In our solution, we divide the table content recognition task into four sub-task
 
    ```sh
    # install mmocr
-   cd ./MASTER_mmocr
+   cd {Path to TableMASTER_mmocr}
    pip install -v -e .
    ```
 
@@ -148,7 +150,7 @@ Directory structure of parsed train data is :
 1. Train text line detection model with [PSENet](https://arxiv.org/pdf/1806.02559.pdf). 
 
    ```shell
-   sh ./table_recognition/table_text_line_detection_dist_train.sh
+   sh ./table_recognition/expr/table_text_line_detection_dist_train.sh
    ```
 
    We don't offer PSENet train data here, you can create the text line annotations by open source label software. In our experiment,  we only use 2,500 table images to  train our model. It gets a perfect text line detection result on validation set.
@@ -156,7 +158,7 @@ Directory structure of parsed train data is :
 2. Train text-line recognition model with [MASTER](https://arxiv.org/abs/1910.02562). 
 
    ```shell
-   sh ./table_recognition/table_text_line_recognition_dist_train.sh
+   sh ./table_recognition/expr/table_text_line_recognition_dist_train.sh
    ```
 
    We can get about 30,000,000 text line images from 500,777 training images and 550,000 text line images from 9115 validation images.  But we only select 20,000 text line images from 550,000 dataset for evaluatiing after each trainig epoch, to pick up the best text line recognition model.
@@ -166,7 +168,7 @@ Directory structure of parsed train data is :
 3. Train table structure recognition model, with **TableMASTER**.
 
    ```shell
-   sh ./table_recognition/table_recognition_dist_train.sh
+   sh ./table_recognition/expr/table_recognition_dist_train.sh
    ```
 
 ### Inference
@@ -260,6 +262,22 @@ To get final results, firstly, we need to forward the three up-mentioned models,
 |         PSENet + MASTER + ensemble_TableMASTER          | **0.9676** |
 
 In [this paper](https://arxiv.org/pdf/2105.01848.pdf), we reported 0.9684 TEDS score in validation set (9115 samples). The gap between **0.9676** and **0.9684** comes from that we ensemble three text line models in the competition, but here, we only use one model. Of course, hyperparameter tuning will also affect TEDS score.
+
+
+
+<!-- Result -->
+
+## Pretrained Model
+
+The **TableMASTER** (TableMASTER_maxlength_500) pretrained model has been released!
+
+In the validation set, the accuracy is **0.7767**. (Train with GTX 1080Ti * 3, batchsize is 12).
+
+ [[Google Drive]](https://drive.google.com/file/d/1LSuVQJ0J8WFtXhLfcCKyzGqcCYmcwEk6/view?usp=sharing)
+
+[[BaiduYun Drive]](https://pan.baidu.com/s/1G2tBpycZY6c6wzfE3V9khw) code:**irp6**
+
+
 
 
 

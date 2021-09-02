@@ -2,7 +2,7 @@ _base_ = [
     '../../_base_/default_runtime.py',
 ]
 
-alphabet_file = '/data_0/pubtabnet/processed_data/recognitionAlphabet.txt'
+alphabet_file = '/data_0/dataset/processed_data/textline_recognition_alphabet.txt'
 alphabet_len = len(open(alphabet_file, 'r', encoding='utf-8').readlines())
 max_seq_len = 100
 
@@ -100,8 +100,7 @@ test_pipeline = [
 
 dataset_type = 'OCRDataset'
 img_prefix1 = ''
-# train_anno_file1 = '/data_8/data/TableRecognition/regData/table_recognization_train_txt/all_refine.txt'
-train_anno_file1 = '/data_0/pubtabnet/processed_data/recognition_val.txt'
+train_anno_file1 = '/data_0/dataset/processed_data/recognition_train_txt/all.txt'
 train1 = dict(
     type=dataset_type,
     img_prefix=img_prefix1,
@@ -119,7 +118,7 @@ train1 = dict(
 
 test_img_prefix = ''
 # test_ann_files = {'table_Rec_val_small_0': '/data_8/data/TableRecognition/regValData/table_recognization_train_txt/small_0_refine.txt'}
-test_ann_files = {'table_Rec_val_debug_0': '/data_0/pubtabnet/processed_data/recognition_val.txt'}
+test_ann_files = {'table_Rec_val_debug_0': '/data_0/dataset/processed_data/recognition_train_txt/0.txt'}
 testset = [dict(
     type=dataset_type,
     img_prefix=test_img_prefix,

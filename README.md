@@ -334,3 +334,4 @@ This project is licensed under the MIT License. See LICENSE for more details.
 * [PSENet](https://github.com/whai362/PSENet)
 * [MASTER-mmocr](https://github.com/JiaquanYe/MASTER-mmocr)
 * [TableMASTER Report PPT](./imgs/table2html.pdf)
+* [Bilibili Report Video](https://www.bilibili.com/video/BV1pU4y1E7Fq?spm_id_from=333.999.0.0)

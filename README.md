@@ -31,7 +31,7 @@
       </ul>
      </li>
     <li><a href="#result">Result</a></li>
-    <li><a href="#pretrained model">Pretrained Model</a></li>
+    <li><a href="#pretrained-model">Pretrained model</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>

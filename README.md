@@ -265,7 +265,7 @@ In [this paper](https://arxiv.org/pdf/2105.01848.pdf), we reported 0.9684 TEDS s
 
 
 
-<!-- Result -->
+<!-- Pretrain Model -->
 
 ## Pretrained Model
 

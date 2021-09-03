@@ -1,5 +1,11 @@
   <h1 align="left">TableMASTER-mmocr</h1>
 
+<!-- New -->
+
+## New
+
++ 2021/07: **TableMASTER** pretrained model release.
+
 
 
 <!-- TABLE OF CONTENTS -->

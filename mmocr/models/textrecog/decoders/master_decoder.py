@@ -39,8 +39,8 @@ class SubLayerConnection(nn.Module):
         self.dropout = nn.Dropout(dropout)
 
     def forward(self, x, sublayer):
-        tmp = self.norm(x)
-        tmp = sublayer(tmp)
+        #tmp = self.norm(x)
+        #tmp = sublayer(tmp)
         return x + self.dropout(sublayer(self.norm(x)))
 
 

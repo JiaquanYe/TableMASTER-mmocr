@@ -347,7 +347,7 @@ class TableMasterConvertor(MasterConvertor):
 
             pred_bboxes.append(output_bbox)
 
-            return pred_bboxes
+        return pred_bboxes
 
     def _adjsut_bboxes_len(self, bboxes, strings):
         new_bboxes = []

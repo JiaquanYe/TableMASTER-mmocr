@@ -217,7 +217,11 @@ class TableMasterConvertor(MasterConvertor):
             bbox_pad = torch.Tensor([0., 0., 0., 0.]).float()
             padded_bbox = torch.zeros(self.max_seq_len, 4)
             padded_bbox[:] = bbox_pad
-            padded_bbox[1:len(bbox)+1] = bbox
+            if bbox.shape[0] > self.max_seq_len - 2:
+                # case sample's length over max_seq_len
+                padded_bbox[1:self.max_seq_len-1] = bbox[:self.max_seq_len-2]
+            else:
+                padded_bbox[1:len(bbox)+1] = bbox
             padded_bboxes.append(padded_bbox)
         padded_bboxes = torch.stack(padded_bboxes, 0).float()
         return padded_bboxes
@@ -229,7 +233,11 @@ class TableMasterConvertor(MasterConvertor):
             bbox_mask_pad = torch.Tensor([0])
             padded_bbox_mask = torch.zeros(self.max_seq_len)
             padded_bbox_mask[:] = bbox_mask_pad
-            padded_bbox_mask[1:len(bbox_mask)+1] = bbox_mask
+            if bbox_mask.shape[0] > self.max_seq_len - 2:
+                # case sample's length over max_seq_len
+                padded_bbox_mask[1:self.max_seq_len-1] = bbox_mask[:self.max_seq_len-2]
+            else:
+                padded_bbox_mask[1:len(bbox_mask)+1] = bbox_mask
             padded_bbox_masks.append(padded_bbox_mask)
         padded_bbox_masks = torch.stack(padded_bbox_masks, 0).long()
         return padded_bbox_masks

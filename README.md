@@ -4,7 +4,8 @@
 
 ## New
 
-+ 2021/07: **TableMASTER** pretrained model release.
++ 2021/09: **TableMASTER** pretrained model release.
++ 2021/10: **Lmdb** training data release.
 
 
 
@@ -38,10 +39,12 @@
      </li>
     <li><a href="#result">Result</a></li>
     <li><a href="#pretrained-model">Pretrained model</a></li>
+    <li><a href="#Lmdb-data">Lmdb data</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
+
 
 
 
@@ -150,6 +153,12 @@ Directory structure of parsed train data is :
 ├── structure_alphabet.txt
 └── textline_recognition_alphabet.txt
 ```
+
+We also transfer the raw **Pubtanet** data to **Lmdb** files by the script [lmdb_maker.py](https://github.com/JiaquanYe/TableMASTER-mmocr/blob/master/table_recognition/lmdb_marker.py). 
+
+Click [here](https://pan.baidu.com/s/1X3P2zFpEBN1T_r22l_9zSA) to download the **Pubtanet** data **Lmdb** files (code:uxl1)
+
+If you want to train your model via **Lmdb** files, please take a look at the [TableMASTER lmdb config file](https://github.com/JiaquanYe/TableMASTER-mmocr/blob/master/configs/textrecog/master/table_master_lmdb_ResnetExtract_Ranger_0930.py) and [text-line MASTER lmdb config file](https://github.com/JiaquanYe/TableMASTER-mmocr/blob/master/configs/textrecog/master/master_lmdb_ResnetExtra_tableRec_dataset_dynamic_mmfp16.py)
 
 ### Train
 
@@ -284,6 +293,14 @@ In the validation set, the accuracy is **0.7767**. (Train with GTX 1080Ti * 3, b
 [[BaiduYun Drive]](https://pan.baidu.com/s/1G2tBpycZY6c6wzfE3V9khw) code:**irp6**
 
 
+
+<!-- Lmdb data -->
+
+## Lmdb Data
+
+We convert the raw **Pubtabnet** data to **Lmdb** files. You can download by this link:
+
+[[BaiduYun Drive]](https://pan.baidu.com/s/1X3P2zFpEBN1T_r22l_9zSA) code: **uxl1**
 
 
 

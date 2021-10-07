@@ -3,6 +3,7 @@ import os.path as osp
 from mmocr.datasets.builder import LOADERS, build_parser
 from mmocr.utils import list_from_file, list_from_folder_table
 
+import pickle
 
 @LOADERS.register_module()
 class Loader:
@@ -165,6 +166,110 @@ class MJSTLmdbAnnFileBackend:
         with self.env.begin(write=False) as txn:
             line = filename + separator + txn.get(label_key).decode()
         return line
+
+    def __len__(self):
+        return self.total_number
+
+    def _get_env(self):
+        import lmdb
+        return lmdb.open(
+            self.lmdb_path,
+            max_readers=1,
+            readonly=True,
+            lock=False,
+            readahead=False,
+            meminit=False,
+        )
+
+
+@LOADERS.register_module()
+class TableMASTERLmdbLoader(Loader):
+    """Load TableMASTER annotation file with lmdb storage backend with FastOCR lmdb style."""
+
+    def _load(self, ann_file):
+        lmdb_anno_obj = TableMASTERLmdbAnnFileBackend(ann_file)
+
+        return lmdb_anno_obj
+
+
+class TableMASTERLmdbAnnFileBackend:
+    """TableMASTER lmdb storage backend for annotation file FastOCR lmdb style.
+        Create lmdb file by 'lmdb_maker.py'
+
+    Args:
+        lmdb_path (str): Lmdb file path.
+    """
+
+    def __init__(self, lmdb_path, coding='utf8'):
+        self.lmdb_path = lmdb_path
+        self.coding = coding
+        env = self._get_env()
+        with env.begin(write=False) as txn:
+            self.total_number = int(pickle.loads(txn.get(b"__len__")))
+
+    def __getitem__(self, index):
+        """Retrieval one line from lmdb file by index."""
+        # only attach env to self when __getitem__ is called
+        # because env object cannot be pickle
+        if not hasattr(self, 'env'):
+            self.env = self._get_env()
+
+        with self.env.begin(write=False) as txn:
+            # data will be further parsed in parser.
+            data = pickle.loads(txn.get(str.encode('{}'.format(index))))
+        return data
+
+    def __len__(self):
+        return self.total_number
+
+    def _get_env(self):
+        import lmdb
+        return lmdb.open(
+            self.lmdb_path,
+            max_readers=1,
+            readonly=True,
+            lock=False,
+            readahead=False,
+            meminit=False,
+        )
+    
+    
+@LOADERS.register_module()
+class MASTERLmdbLoader(Loader):
+    """Load text-line MASTER annotation file with lmdb storage backend with FastOCR lmdb style."""
+
+    def _load(self, ann_file):
+        lmdb_anno_obj = MASTERLmdbAnnFileBackend(ann_file)
+
+        return lmdb_anno_obj
+
+
+class MASTERLmdbAnnFileBackend:
+    """Text-line MASTER lmdb storage backend for annotation file FastOCR lmdb style.
+        Create lmdb file by 'lmdb_maker.py'
+
+    Args:
+        lmdb_path (str): Lmdb file path.
+    """
+
+    def __init__(self, lmdb_path, coding='utf8'):
+        self.lmdb_path = lmdb_path
+        self.coding = coding
+        env = self._get_env()
+        with env.begin(write=False) as txn:
+            self.total_number = int(pickle.loads(txn.get(b"__len__")))
+
+    def __getitem__(self, index):
+        """Retrieval one line from lmdb file by index."""
+        # only attach env to self when __getitem__ is called
+        # because env object cannot be pickle
+        if not hasattr(self, 'env'):
+            self.env = self._get_env()
+
+        with self.env.begin(write=False) as txn:
+            # data will be further parsed in parser.
+            data = pickle.loads(txn.get(str.encode('{}'.format(index))))
+        return data
 
     def __len__(self):
         return self.total_number

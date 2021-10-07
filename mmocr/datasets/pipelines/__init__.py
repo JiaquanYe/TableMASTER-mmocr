@@ -2,7 +2,7 @@ from .box_utils import sort_vertex, sort_vertex8
 from .custom_format_bundle import CustomFormatBundle
 from .dbnet_transforms import EastRandomCrop, ImgAug
 from .kie_transforms import KIEFormatBundle
-from .loading import LoadImageFromNdarray, LoadTextAnnotations, LoadImageFromLMDB
+from .loading import LoadImageFromNdarray, LoadTextAnnotations, LoadImageFromLMDB, LoadImageFromNdarrayV2
 from .ner_transforms import NerTransform, ToTensorNER
 from .ocr_seg_targets import OCRSegTargets
 from .ocr_transforms import (FancyPCA, NormalizeOCR, OnlineCropOCR,
@@ -27,5 +27,6 @@ __all__ = [
     'PilToOpencv', 'KIEFormatBundle', 'SquareResizePad', 'TextSnakeTargets',
     'sort_vertex', 'LoadImageFromNdarray', 'sort_vertex8', 'FCENetTargets',
     'RandomScaling', 'RandomCropFlip', 'NerTransform', 'ToTensorNER',
-    'LoadImageFromLMDB', 'TableResize', 'TablePad', 'TableBboxEncode'
+    'LoadImageFromLMDB', 'TableResize', 'TablePad', 'TableBboxEncode',
+    'LoadImageFromNdarrayV2'
 ]

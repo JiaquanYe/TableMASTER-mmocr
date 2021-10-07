@@ -1,7 +1,9 @@
 import json
 import os
 from mmocr.datasets.builder import PARSERS
+from mmocr.utils import convert_bbox
 import numpy as np
+import cv2
 
 @PARSERS.register_module()
 class LineStrParser:
@@ -226,5 +228,114 @@ class TableStrParser:
         line_info['text'] = text
         line_info['bbox'] = bboxes
         line_info['bbox_masks'] = bbox_masks
+
+        return line_info
+
+
+@PARSERS.register_module()
+class TableMASTERLmdbParser:
+    """Parse a dict which include 'file_path', 'bbox', 'label' to training dict format.
+    The lmdb's data advance parse will do here.
+
+    Args:
+        keys (list[str]): Keys in result dict.
+        keys_idx (list[int]): Value index in sub-string list
+            for each key above.
+        separator (str): Separator to separate string to list of sub-string.
+        max_seq_len (int): Max sequence, to filter the samples's label longer than this.
+    """
+
+    def __init__(self,
+                 keys=['filename', 'text'],
+                 keys_idx=[0, 1],
+                 separator=',',
+                 max_seq_len=40):
+        assert isinstance(keys, list)
+        assert isinstance(keys_idx, list)
+        assert isinstance(separator, str)
+        assert len(keys) > 0
+        assert len(keys) == len(keys_idx)
+        self.keys = keys
+        self.keys_idx = keys_idx
+        self.separator = separator
+
+    def get_item(self, data_ret, index):
+        map_index = index % len(data_ret)
+        data = data_ret[map_index]
+
+        # img_name, img, info_lines
+        file_name = data[0]
+        bytes = data[1]
+        buf = np.frombuffer(bytes, dtype=np.uint8)
+        img = cv2.imdecode(buf, cv2.IMREAD_COLOR)
+        info_lines = data[2]  # raw data from TableMASTER annotation file.
+
+        # parse info_lines
+        raw_data = info_lines.strip().split('\n')
+        raw_name, text = raw_data[0], raw_data[1]  # don't filter the samples's length over max_seq_len.
+        bbox_str_list = raw_data[2:]
+        bbox_split = ','
+        bboxes = [convert_bbox(bsl.strip().split(bbox_split)) for bsl in bbox_str_list]
+
+        # advance parse bbox
+        empty_bbox_mask = build_empty_bbox_mask(bboxes)
+        bboxes, empty_bbox_mask = align_bbox_mask(bboxes, empty_bbox_mask, text)
+        bboxes = np.array(bboxes)
+        empty_bbox_mask = np.array(empty_bbox_mask)
+
+        bbox_masks = build_bbox_mask(text)
+        bbox_masks = bbox_masks * empty_bbox_mask
+
+        line_info = {}
+        line_info['filename'] = file_name
+        line_info['text'] = text
+        line_info['bbox'] = bboxes
+        line_info['bbox_masks'] = bbox_masks
+        line_info['img'] = img
+
+        return line_info
+
+
+@PARSERS.register_module()
+class MASTERLmdbParser:
+    """Parse a dict which include 'file_path', 'bbox', 'label' to training dict format.
+    The lmdb's data advance parse will do here.
+
+    Args:
+        keys (list[str]): Keys in result dict.
+        keys_idx (list[int]): Value index in sub-string list
+            for each key above.
+        separator (str): Separator to separate string to list of sub-string.
+        max_seq_len (int): Max sequence, to filter the samples's label longer than this.
+    """
+
+    def __init__(self,
+                 keys=['filename', 'text'],
+                 keys_idx=[0, 1],
+                 separator='\t'):
+        # useless for this class object.
+        assert isinstance(keys, list)
+        assert isinstance(keys_idx, list)
+        assert isinstance(separator, str)
+        assert len(keys) > 0
+        assert len(keys) == len(keys_idx)
+        self.keys = keys
+        self.keys_idx = keys_idx
+        self.separator = separator
+
+    def get_item(self, data_ret, index):
+        map_index = index % len(data_ret)
+        data = data_ret[map_index]
+
+        # img, label
+        bytes = data[0]
+        text = data[1]
+        buf = np.frombuffer(bytes, dtype=np.uint8)
+        img = cv2.imdecode(buf, cv2.IMREAD_COLOR)
+
+        line_info = {}
+        line_info['filename'] = str(map_index)
+        line_info['text'] = text
+        line_info['img'] = img
 
         return line_info

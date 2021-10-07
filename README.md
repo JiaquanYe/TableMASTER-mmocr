@@ -154,7 +154,7 @@ Directory structure of parsed train data is :
 └── textline_recognition_alphabet.txt
 ```
 
-We also transfer the raw **Pubtanet** data to **Lmdb** files by the script [lmdb_maker.py](https://github.com/JiaquanYe/TableMASTER-mmocr/blob/master/table_recognition/lmdb_marker.py). 
+We also transfer the raw **Pubtanet** data to **Lmdb** files by the script [lmdb_maker.py](https://github.com/JiaquanYe/TableMASTER-mmocr/blob/master/table_recognition/lmdb_maker.py). 
 
 Click [here](https://pan.baidu.com/s/1X3P2zFpEBN1T_r22l_9zSA) to download the **Pubtanet** data **Lmdb** files (code:uxl1)
 

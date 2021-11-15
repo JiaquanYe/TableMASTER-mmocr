@@ -6,6 +6,7 @@
 
 + 2021/09: **TableMASTER** pretrained model release.
 + 2021/10: **Lmdb** training data release.
++ 2021/11: **tablemaster_mmocr** docker environment release.
 
 
 
@@ -26,6 +27,7 @@
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
+        <li><a href="#docker-environment">Docker environment</a></li>
       </ul>
     </li>
     <li>
@@ -44,6 +46,7 @@
     <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
+
 
 
 
@@ -110,6 +113,12 @@ In our solution, we divide the table content recognition task into four sub-task
    # install mmcv-full-1.3.4 with torch version 1.8.0 cuda_version 10.2
    pip install mmcv-full==1.3.4 -f https://download.openmmlab.com/mmcv/dist/cu102/torch1.8.0/index.html
    ```
+
+### Docker environment
+
+```shell
+docker pull jiaquanye/tablemaster_mmocr:v1
+```
 
 
 

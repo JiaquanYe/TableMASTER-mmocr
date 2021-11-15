@@ -142,8 +142,8 @@ test_pipeline = [
 dataset_type = 'OCRDataset'
 train_img_prefix = '/data_0/dataset/pubtabnet/train/'
 train_anno_file1 = '/data_0/dataset/processed_data/lmdb/StructureLabel_train/'
-# train_img_prefix = '/data_0/dataset/pubtabnet/val/'
-# train_anno_file1 = '/data_0/dataset/processed_data/lmdb/StructureLabel_val/'
+# train_img_prefix = ''
+# train_anno_file1 = ''
 train1 = dict(
     type=dataset_type,
     img_prefix=train_img_prefix,
@@ -162,6 +162,8 @@ train1 = dict(
 
 valid_img_prefix = '/data_0/dataset/pubtabnet/val/'
 valid_anno_file1 = '/data_0/dataset/processed_data/lmdb/StructureLabel_val/'
+# valid_img_prefix = ''
+# valid_anno_file1 = ''
 valid = dict(
     type=dataset_type,
     img_prefix=valid_img_prefix,
@@ -181,6 +183,8 @@ valid = dict(
 
 test_img_prefix = '/data_0/dataset/pubtabnet/val/'
 test_anno_file1 = '/data_0/dataset/processed_data/lmdb/StructureLabel_val/'
+# test_img_prefix = ''
+# test_anno_file1 = ''
 test = dict(
     type=dataset_type,
     img_prefix=test_img_prefix,
@@ -199,8 +203,8 @@ test = dict(
     test_mode=True)
 
 data = dict(
-    samples_per_gpu=4,
-    workers_per_gpu=0,
+    samples_per_gpu=20,
+    workers_per_gpu=2,
     train=dict(type='ConcatDataset', datasets=[train1]),
     val=dict(type='ConcatDataset', datasets=[valid]),
     test=dict(type='ConcatDataset', datasets=[test]))

@@ -300,9 +300,7 @@ The **TableMASTER** (TableMASTER_maxlength_500) pretrained model. In the validat
 
 [[BaiduYun Drive]](https://pan.baidu.com/s/1G2tBpycZY6c6wzfE3V9khw) code:**irp6**
 
-
-
-
+<!-- span1 -->
 
 The table textline detection model **PSENet** pretrained model. 
 
@@ -316,9 +314,7 @@ We also release the **PSENet train data**.
 
 [[BaiduYun Drive]](https://pan.baidu.com/s/1jI1JhhvSASo54kvu7QPJ5g) code:**rzu2**
 
-
-
-
+<!-- span2 -->
 
 The table textline recognition model **MASTER** pretrained model. In the textline validation subset, the accuracy is **0.9798**.
 
@@ -330,9 +326,7 @@ The table textline recognition model **MASTER** pretrained model. In the textlin
 
 We will fix this bug in next pretrained model release. You can also train a textline recognition model, after filter the textline images of table head. 
 
-
-
-
+<!-- span3 -->
 
 The final **TEDS** scores is **0.9618**, while use this three pretrained models. You can get the log file in :
 

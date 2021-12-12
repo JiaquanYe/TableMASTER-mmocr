@@ -888,17 +888,21 @@ class Matcher:
         return merged_results
 
 
+class DemoMatcher(Matcher):
+    def __init__(self, end2end_result_dict, structure_master_result_dict):
+        self.end2end_results = end2end_result_dict
+        self.structure_master_results = structure_master_result_dict
 
 
 
 if __name__ == "__main__":
-    end2end_file = 'end2end_results.pkl'
-    structure_master_file = 'structure_master_results.pkl'
+    end2end_file = './end2end_val_result/'
+    structure_master_file = './structure_val_result/'
     matcher = Matcher(end2end_file, structure_master_file)
     match_results = matcher.match()
     merged_results = matcher.get_merge_result(match_results)
 
-    results_save_folder = './cache/0721/'
+    results_save_folder = './final_result/'
     if not os.path.exists(results_save_folder): os.makedirs(results_save_folder)
     results_save_path = os.path.join(results_save_folder, 'final_results.pkl')
     with open(results_save_path, 'wb') as f:

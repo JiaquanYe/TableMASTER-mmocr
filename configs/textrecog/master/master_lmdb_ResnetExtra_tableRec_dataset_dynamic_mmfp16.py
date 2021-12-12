@@ -117,7 +117,6 @@ train1 = dict(
     test_mode=False)
 
 test_img_prefix = ''
-# test_ann_files = {'table_Rec_val_small_0': '/data_8/data/TableRecognition/regValData/table_recognization_train_txt/small_0_refine.txt'}
 test_ann_files = {'table_Rec_val': '/data_0/dataset/processed_data/lmdb/MasterRecLabel_val/'}
 testset = [dict(
     type=dataset_type,
@@ -136,8 +135,8 @@ testset = [dict(
     test_mode=True) for dataset_name, test_ann_file in test_ann_files.items()]
 
 data = dict(
-    samples_per_gpu=64,
-    workers_per_gpu=1,
+    samples_per_gpu=256,
+    workers_per_gpu=4,
     train=dict(type='ConcatDataset', datasets=[train1]),
     val=dict(type='ConcatDataset', datasets=testset),
     test=dict(type='ConcatDataset', datasets=testset))
@@ -157,7 +156,7 @@ lr_config = dict(
 total_epochs = 10
 
 # evaluation
-evaluation = dict(interval=1, metric='acc')
+evaluation = dict(interval=3, metric='acc')
 
 # fp16
 fp16 = dict(loss_scale='dynamic')

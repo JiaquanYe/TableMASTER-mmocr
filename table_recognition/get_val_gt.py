@@ -29,7 +29,7 @@ def searchMerge(tokensList):
 
 
 jsonFile = 'PubTabNet_2.0.0.jsonl'
-smallVal300 = '/data_0/yejiaquan/data/TableRecognition/val'
+smallVal300 = ''
 thisValList = os.listdir(smallVal300)
 gtDict = dict()
 with open(jsonFile, 'rb') as f:
@@ -82,6 +82,6 @@ with open(jsonFile, 'rb') as f:
         gtDict.setdefault(filename, gtToken)
 
 
-gtFile = 'gtVal_0726.json'
+gtFile = 'gtVal_1212.json'
 with open(gtFile, 'w') as f:
     json.dump(gtDict, f)

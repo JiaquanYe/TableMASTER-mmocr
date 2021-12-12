@@ -86,6 +86,10 @@ def master_label_operation(line, separator='\t'):
     # extract text img's label (merged)
     text = ''.join(line.strip().split(separator)[1:])
 
+    # remove space at begin, which will effect text-line results
+    if text.startswith(' '):
+        text = text[1:]
+
     return image_path, text
 
 
@@ -255,7 +259,7 @@ class MASTER_LmdbMaker(LmdbMaker):
 
         for txt in txt_lst:
             print('parsing txt file : {}'.format(txt))
-            with open(txt, 'r') as f:
+            with open(txt, 'r', encoding='utf8') as f:
                 for line in f.readlines():
                     try:
                         # do something, extract info from a txt file and pack to item.
@@ -371,4 +375,15 @@ if __name__ == '__main__':
         label = data[1]
         buf = np.frombuffer(bytes, dtype=np.uint8)
         img = cv2.imdecode(buf, cv2.IMREAD_COLOR)
-        import pdb;pdb.set_trace()
+        # get loop to check
+        for i in range(total_number):
+            data = pickle.loads(txn.get('{}'.format(i).encode()))
+            # img, label
+            bytes = data[0]
+            label = data[1]
+            if label.startswith(' '):
+                buf = np.frombuffer(bytes, dtype=np.uint8)
+                img = cv2.imdecode(buf, cv2.IMREAD_COLOR)
+                import pdb;pdb.set_trace()
+
+

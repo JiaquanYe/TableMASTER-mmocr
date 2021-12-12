@@ -7,6 +7,7 @@
 + 2021/09: **TableMASTER** pretrained model release.
 + 2021/10: **Lmdb** training data release.
 + 2021/11: **tablemaster_mmocr** docker environment release.
++ 2021/12: End2end **demo** inference release, **pretrained model** release.
 
 
 
@@ -293,13 +294,45 @@ In [this paper](https://arxiv.org/pdf/2105.01848.pdf), we reported 0.9684 TEDS s
 
 ## Pretrained Model
 
-The **TableMASTER** (TableMASTER_maxlength_500) pretrained model has been released!
-
-In the validation set, the accuracy is **0.7767**. (Train with GTX 1080Ti * 3, batchsize is 12).
+The **TableMASTER** (TableMASTER_maxlength_500) pretrained model. In the validation set, the accuracy is **0.7767**.
 
 [[Google Drive]](https://drive.google.com/file/d/1LSuVQJ0J8WFtXhLfcCKyzGqcCYmcwEk6/view?usp=sharing)
 
 [[BaiduYun Drive]](https://pan.baidu.com/s/1G2tBpycZY6c6wzfE3V9khw) code:**irp6**
+
+
+
+The table textline detection model **PSENet** pretrained model. 
+
+ [[Google Drive]](https://drive.google.com/file/d/13vni9GH6cxr5jTiOdiRu--Q6AZojB2p2/view?usp=sharing)
+
+[[BaiduYun Drive]](https://pan.baidu.com/s/1fPdkS6iTA8CKmjsQ7noKLw) code:**6b30**
+
+We also release the **PSENet train data**.
+
+ [[Google Drive]](https://drive.google.com/file/d/1IjNM7GZKZEioFz7yoA4ZVF4SUY8IP2Qi/view?usp=sharing)
+
+[[BaiduYun Drive]](https://pan.baidu.com/s/1jI1JhhvSASo54kvu7QPJ5g) code:**rzu2**
+
+
+
+The table textline recognition model **MASTER** pretrained model. In the textline validation subset, the accuracy is **0.9798**.
+
+ [[Google Drive]](https://drive.google.com/file/d/1bqTRaUlV2UViIZ5qlJR5VlTMLMf03oGA/view?usp=sharing)
+
+[[BaiduYun Drive]](https://pan.baidu.com/s/1_Ezm67marVeHZ-xm7Fk_Lw) code:**kp25**
+
+**PS:** Due to some mistakes occur in textline recognition lmdb file making, the accuracy of his version MASTER pretrained model, is lower than the accuracy reported in [this paper](https://arxiv.org/pdf/2105.01848.pdf). The details is, we don't filter the textline images in **table head**. In **pubtabnet**, content in **table head** is always surrounded by **b /b**, which means **overstriking** in table images. So, training with textline images in **table head** of table will make model failed to recognition **overstriking** character. **It will drop the word accuracy of textline recognition model. Of course, it will drop the final TEDS scores**.
+
+We will fix this bug in next pretrained model release. You can also train a textline recognition model, after filter the textline images of table head. 
+
+
+
+The final **TEDS** scores is **0.9618**, while use this three pretrained models. You can get the log file in :
+
+[[Google Drive]](https://drive.google.com/file/d/1PGq9Y12eMfXMWiHJMi-_SgHyO1ACxnzp/view?usp=sharing)
+
+[[BaiduYun Drive]](https://pan.baidu.com/s/1wT0QttmmPDBnViVAMqDGKA) code:**g3gx**
 
 
 

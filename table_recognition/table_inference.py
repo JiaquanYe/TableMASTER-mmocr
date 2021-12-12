@@ -309,7 +309,7 @@ class Runner:
                 pickle.dump(detect_results, f)
 
 
-    def do_recognize_predict(self, path, is_save=True, gpu_idx=None, only_one_gpu=True):
+    def do_recognize_predict(self, path, is_save=True, gpu_idx=None, only_one_gpu=True, nums_parts=8):
         # recommend to run recognizer in single one gpu, speed up.
         if not isinstance(path, list):
             raise ValueError
@@ -318,7 +318,7 @@ class Runner:
         detect_results = dict()
         if only_one_gpu:
             print()
-            for i in range(8):
+            for i in range(nums_parts):
                 detect_result_file = os.path.join(self.end2end_result_folder, 'detection_results_{}.pkl'.format(i))
                 with open(detect_result_file, 'rb') as f:
                     detect_result = pickle.load(f)
@@ -453,14 +453,14 @@ class Runner:
         self.release_detector()
 
 
-    def run_recognize_single_chunk(self, chunk_id=0):
+    def run_recognize_single_chunk(self, chunk_id=0, nums_det_result_part=8):
         all_paths = []
         for chunk in self.chunks:
             all_paths.extend(chunk)
 
         # only use gpu 0 to recognition inference.
         self.init_recognizer()
-        self.do_recognize_predict(all_paths, is_save=True, gpu_idx=chunk_id, only_one_gpu=True)
+        self.do_recognize_predict(all_paths, is_save=True, gpu_idx=chunk_id, only_one_gpu=True, nums_parts=nums_det_result_part)
         self.release_recognizer()
 
 
@@ -484,18 +484,17 @@ if __name__ == '__main__':
     task_id = int(sys.argv[3])
 
     cfg = {
-        'pse_config':'',
-        'master_config':'',
-        'structure_master_config':'',
-        'pse_ckpt':'',
-        'master_ckpt':'',
-        'structure_master_ckpt':'',
-        'end2end_result_folder':'',
-        'structure_master_result_folder':'',
+        'pse_config': './configs/textdet/psenet/psenet_r50_fpnf_600e_pubtabnet.py',
+        'master_config': './configs/textrecog/master/master_lmdb_ResnetExtra_tableRec_dataset_dynamic_mmfp16.py',
+        'structure_master_config': './configs/textrecog/master/table_master_ResnetExtract_Ranger_0705.py',
+        'pse_ckpt': '/data_0/dataset/demo_model_v1/pse_epoch_600.pth',
+        'master_ckpt': '/data_0/dataset/demo_model_v1/master_epoch_6.pth',
+        'structure_master_ckpt': '/data_0/dataset/demo_model_v1/tablemaster_best.pth',
+        'end2end_result_folder': '/data_0/work_dirs/end2end_val_result',
+        'structure_master_result_folder': '/data_0/work_dirs/structure_val_result',
 
-        'test_folder':'./val',
-        # 'test_folder':'./smallVal10'
-        'chunks_nums':chunk_nums
+        'test_folder': '/data_0/dataset/pubtabnet/val/',
+        'chunks_nums': chunk_nums
     }
 
     # single gpu device inference
@@ -508,7 +507,8 @@ if __name__ == '__main__':
         runner.run_detect_single_chunk(chunk_id=chunk_id)
     elif task_id == 1:
         # recognition task, one gpu run
-        runner.run_recognize_single_chunk(chunk_id=0)
+        nums_det_res_file = 2
+        runner.run_recognize_single_chunk(chunk_id=0, nums_det_result_part=nums_det_res_file)
     elif task_id == 2:
         # structure task
         runner.run_structure_single_chunk(chunk_id=chunk_id)

@@ -29,13 +29,8 @@ if __name__ == "__main__":
     t_start = time.time()
     pool = Pool(64)
     start_time = time.time()
-    predFile = './predResult.pkl'
-    gtJsonFile = './gtVal.json'
-    problemFile = './problem.txt'
-    fid = open(problemFile, 'w')
-
-    threshold = 0.80
-    problemList = []
+    predFile = '/data_0/work_dirs/final_results_1212.pkl'
+    gtJsonFile = '/data_0/work_dirs/gtVal_1212.json'
 
     # Initialize TEDS object
     teds = TEDS(n_jobs=1)

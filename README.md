@@ -322,13 +322,13 @@ The table textline recognition model **MASTER** pretrained model. In the textlin
 
 [[BaiduYun Drive]](https://pan.baidu.com/s/1_Ezm67marVeHZ-xm7Fk_Lw) code:**kp25**
 
-**PS:** Due to some mistakes occur in textline recognition lmdb file making, the accuracy of his version MASTER pretrained model, is lower than the accuracy reported in [this paper](https://arxiv.org/pdf/2105.01848.pdf). The details is, we don't filter the textline images in **table head**. In **pubtabnet**, content in **table head** is always surrounded by **b /b**, which means **overstriking** in table images. So, training with textline images in **table head** of table will make model failed to recognition **overstriking** character. **It will drop the word accuracy of textline recognition model. Of course, it will drop the final TEDS scores**.
+**PS:**  Due to some mistakes occur in making text-line recognition lmdb file, the accuracy of the MASTER pretrained model, is lower than the accuracy reported in [this paper](https://arxiv.org/pdf/2105.01848.pdf). In this version, we don't filter the text-line images of **table head**. In **pubtabnet**, content in **table head** is always surrounded by **b /b**, which means **overstriking** in visual. So, training with text-line images of **table head** will make model failed to recognition **overstriking** character. **It will drop the word accuracy of text-line recognition model. Of course, it will drop the final TEDS score**.
 
-We will fix this bug in next pretrained model release. You can also train a textline recognition model, after filter the textline images of table head. 
+We will fix this bug when next version pretrained model releases. You can also train a text-line recognition model, after filtering the text-line images of table head.
 
 <br/>
 
-The final **TEDS** scores is **0.9618**, while use this three pretrained models. You can get the log file in :
+The final **TEDS** score is **0.9618**. You can get the log file in the following link.
 
 [[Google Drive]](https://drive.google.com/file/d/1PGq9Y12eMfXMWiHJMi-_SgHyO1ACxnzp/view?usp=sharing)
 

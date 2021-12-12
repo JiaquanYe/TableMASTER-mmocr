@@ -302,6 +302,8 @@ The **TableMASTER** (TableMASTER_maxlength_500) pretrained model. In the validat
 
 
 
+
+
 The table textline detection model **PSENet** pretrained model. 
 
  [[Google Drive]](https://drive.google.com/file/d/13vni9GH6cxr5jTiOdiRu--Q6AZojB2p2/view?usp=sharing)
@@ -316,6 +318,8 @@ We also release the **PSENet train data**.
 
 
 
+
+
 The table textline recognition model **MASTER** pretrained model. In the textline validation subset, the accuracy is **0.9798**.
 
  [[Google Drive]](https://drive.google.com/file/d/1bqTRaUlV2UViIZ5qlJR5VlTMLMf03oGA/view?usp=sharing)
@@ -325,6 +329,8 @@ The table textline recognition model **MASTER** pretrained model. In the textlin
 **PS:** Due to some mistakes occur in textline recognition lmdb file making, the accuracy of his version MASTER pretrained model, is lower than the accuracy reported in [this paper](https://arxiv.org/pdf/2105.01848.pdf). The details is, we don't filter the textline images in **table head**. In **pubtabnet**, content in **table head** is always surrounded by **b /b**, which means **overstriking** in table images. So, training with textline images in **table head** of table will make model failed to recognition **overstriking** character. **It will drop the word accuracy of textline recognition model. Of course, it will drop the final TEDS scores**.
 
 We will fix this bug in next pretrained model release. You can also train a textline recognition model, after filter the textline images of table head. 
+
+
 
 
 
